@@ -1,6 +1,17 @@
-<?php use Rudra\Container\Facades\Rudra; ?>
+<?php 
+use Rudra\Container\Facades\Rudra; 
+use Rudra\Container\Facades\Session;
+?>
 
-<form action="<?= Rudra::config()->get('url') ?>/admin/material/create" method="post">
+<br>
+<form action="<?= Rudra::config()->get('url') ?>/admin/material/create" method="post" enctype="multipart/form-data">
+<input type='hidden' name='csrf_field' value='<?= Session::get('csrf_token')[0]; ?>'>
+<input type='hidden' name='redirect'>
+<div class="mb-3">
+    <label for="fileToUpload" class="form-label">Фото</label>
+    <input type="file" name="fileToUpload" id="fileToUpload">
+  </div>
+
   <div class="mb-3">
     <label for="title" class="form-label">Заголовок</label>
     <input type="text" class="form-control" id="title" name="title" value="">

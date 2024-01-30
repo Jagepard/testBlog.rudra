@@ -1,6 +1,11 @@
-<?php use Rudra\Container\Facades\Rudra; ?>
-
+<?php 
+use Rudra\Container\Facades\Rudra; 
+use Rudra\Container\Facades\Session;
+?>
+<br>
 <form action="<?= Rudra::config()->get('url') ?>/admin/material/update/<?= $material['id'] ?>" method="post">
+<input type='hidden' name='csrf_field' value='<?= Session::get('csrf_token')[0]; ?>'>
+<input type='hidden' name='redirect' value='<?= $redirect; ?>'>
   <div class="mb-3">
     <label for="title" class="form-label">Заголовок</label>
     <input type="text" class="form-control" id="title" name="title" value="<?= $material['title']?>">

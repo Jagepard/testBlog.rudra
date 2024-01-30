@@ -1,5 +1,9 @@
-<?php use Rudra\Container\Facades\Rudra; ?>
+<?php 
+use Rudra\Container\Facades\Rudra;
+use App\Containers\Blog\UI\UI;
+?>
 
+<br>
 <?php foreach($materials as $material): ?>
 
     <h2><a href="<?= Rudra::config()->get('url') ?>/material/<?= $material['id'] ?>_<?= $material['slug'] ?>"><?= $material['title']?></a></h2>
@@ -8,4 +12,4 @@
 
 <?php endforeach; ?>
 
-<p><a href="<?= Rudra::config()->get('url') ?>/material/add">add</a></p>
+<?= UI::renderLinks($links, $page, $pg_limit, '/'); ?>
