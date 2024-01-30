@@ -5,18 +5,27 @@ namespace App\Containers\Admin\Controllers;
 use App\Containers\Admin\AdminController;
 use App\Containers\Admin\Models\Materials;
 use Rudra\Container\Facades\Request;
+use Rudra\Pagination;
 
 class MaterialsController extends AdminController
 {
     ##### Чтение\ #####
 
+    #[Routing(url: 'admin', method: 'GET')]
     #[Routing(url: 'admin/materials', method: 'GET')]
-    public function materials()
+    #[Routing(url: 'admin/materials/{page}', method: 'GET')]
+    public function materials(string $page = '1')
     {
+        $pagination = new Pagination($page, 5, Materials::numRows());
+        $paginated = Materials::getAllPerPage($pagination);
+
         data([
             "title"   => "title",
             "content" => view("materials/index", [
-                'materials' => Materials::getAll(),
+                'materials' => $paginated,
+                "links"    => $pagination->getLinks(),
+                "page"     => $page,
+                "pg_limit" => 2
             ]),
         ]);
 
@@ -55,6 +64,7 @@ class MaterialsController extends AdminController
             "title"   => $material['title'],
             "content" => view("materials/edit", [
                 'material' => $material,
+                'redirect' => Request::server()->get('HTTP_REFERER')
             ]),
         ]);
 

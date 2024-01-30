@@ -1,12 +1,31 @@
-<?php use Rudra\Container\Facades\Rudra; ?>
+<?php 
+use Rudra\Container\Facades\Rudra; 
+use App\Containers\Admin\UI\UI;
+?>
 
+<br>
+<table class="table table-striped table-hover">
+<tr>
+    <td>#</td>
+    <td></td>
+    <td><a href="<?= Rudra::config()->get('url') ?>/admin/material/add"><button type="button" class="btn btn-info">add</button></a></td>
+</tr>
 <?php foreach($materials as $material): ?>
+    <tr>
 
-    <h2><?= $material['title']?></h2>
+    <td><p><?= $material['id']?></p></td>
+    <td><p><?= $material['title']?></p></td>
 
-    <p><a href="<?= Rudra::config()->get('url') ?>/admin/material/edit/<?= $material['id'] ?>_<?= $material['slug'] ?>">edit</a></p>
-    <p><a href="<?= Rudra::config()->get('url') ?>/admin/material/delete?id=<?= $material['id'] ?>">delete</a></p>
+    <td>
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <a href="<?= Rudra::config()->get('url') ?>/admin/material/edit/<?= $material['id'] ?>_<?= $material['slug'] ?>"><button type="button" class="btn btn-success">edit</button></a>
+        <a href="<?= Rudra::config()->get('url') ?>/admin/material/delete?id=<?= $material['id'] ?>"><button type="button" class="btn btn-danger">delete</button></a>
+    </div>
+    </td>
 
+    </tr>
 <?php endforeach; ?>
 
-<p><a href="<?= Rudra::config()->get('url') ?>/admin/material/add">add</a></p>
+</table>
+
+<?= UI::renderLinks($links, $page, $pg_limit, '/admin/materials/'); ?>

@@ -1,8 +1,5 @@
 <?php use Rudra\Container\Facades\Rudra; ?>
 
+<br>
 <h2><?= $material['title']?></h2>
 <p><?= $material['text']?></p>
-
-
-<p><a href="<?= Rudra::config()->get('url') ?>/material/edit/<?= $material['id'] ?>_<?= $material['slug'] ?>">edit</a></p>
-<p><a href="<?= Rudra::config()->get('url') ?>/material/delete?id=<?= $material['id'] ?>">delete</a></p>
