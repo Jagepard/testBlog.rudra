@@ -1,0 +1,22 @@
+secret: ''
+app.path: /home/d/Public/TestBlog/rudra
+environment: development
+cache.time: now
+roles:
+    admin: 0
+    editor: 1
+    moderator: 2
+    user: 3
+containers:
+    blog: App\Containers\Blog\
+    admin: App\Containers\Admin\
+http.errors:
+    404: [App\Ship\Errors\Controllers\HttpErrorsController, error404]
+    503: [App\Ship\Errors\Controllers\HttpErrorsController, error503]
+database:
+    dsn: mysql:dbname=TestBlog_rudra;host=127.0.0.1
+    # dsn: pgsql:host=127.0.0.1;port=5432;dbname=rudra_postgres;
+    # dsn: sqlite:/home/d/custom_projects/php/rudra/Rudra-Framework/app/Ship/Data/rudra.sqlite
+    username: jagepard
+    password: password
+attributes: true

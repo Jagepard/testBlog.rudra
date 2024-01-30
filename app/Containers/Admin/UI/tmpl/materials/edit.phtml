@@ -1,0 +1,17 @@
+<?php use Rudra\Container\Facades\Rudra; ?>
+
+<form action="<?= Rudra::config()->get('url') ?>/admin/material/update/<?= $material['id'] ?>" method="post">
+  <div class="mb-3">
+    <label for="title" class="form-label">Заголовок</label>
+    <input type="text" class="form-control" id="title" name="title" value="<?= $material['title']?>">
+  </div>
+  <div class="mb-3">
+    <label for="slug" class="form-label">slug</label>
+    <input type="text" class="form-control" id="slug" name="slug" value="<?= $material['slug']?>" disabled>
+  </div>
+  <div class="mb-3">
+    <label for="text" class="form-label">Текст</label>
+    <textarea class="form-control" id="text" name="text"><?= $material['text']?></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Обновить</button>
+</form>

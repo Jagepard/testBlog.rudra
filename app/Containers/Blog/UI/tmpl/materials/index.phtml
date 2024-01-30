@@ -1,0 +1,11 @@
+<?php use Rudra\Container\Facades\Rudra; ?>
+
+<?php foreach($materials as $material): ?>
+
+    <h2><a href="<?= Rudra::config()->get('url') ?>/material/<?= $material['id'] ?>_<?= $material['slug'] ?>"><?= $material['title']?></a></h2>
+
+    <p><?= $material['text']?></p>
+
+<?php endforeach; ?>
+
+<p><a href="<?= Rudra::config()->get('url') ?>/material/add">add</a></p>
