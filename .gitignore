@@ -1,0 +1,6 @@
+/.idea/
+/.vscode/
+/nbproject/
+/vendor/
+/node_modules/
+/composer.lock
