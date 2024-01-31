@@ -1,9 +1,23 @@
 <?php 
 use Rudra\Container\Facades\Rudra; 
 use App\Containers\Admin\UI\UI;
+use Rudra\Container\Facades\Session;
 ?>
 
 <br>
+<div class="row">
+    <div class="col-10">
+      <br>
+      <h1>Dashboard</h1>
+    </div>
+    <div class="col border">
+    <?php if(Session::has("user")) : ?>
+        <p>Вы вошли как: <i><?= Session::get("user")['email']; ?></i></p>
+        <a href="<?= Rudra::config()->get('url') ?>/logout">Выйти</a>
+    <?php endif; ?>
+    </div>
+  </div>
+<hr>
 <table class="table table-striped table-hover">
 <tr>
     <td>#</td>

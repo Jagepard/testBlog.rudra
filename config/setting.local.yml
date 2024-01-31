@@ -10,6 +10,7 @@ roles:
 containers:
     blog: App\Containers\Blog\
     admin: App\Containers\Admin\
+    auth: App\Containers\Auth\
 http.errors:
     404: [App\Ship\Errors\Controllers\HttpErrorsController, error404]
     503: [App\Ship\Errors\Controllers\HttpErrorsController, error503]

@@ -9,7 +9,7 @@ use Rudra\Pagination;
 class MaterialsController extends BlogController
 {
     #[Routing(url: '', method: 'GET')]
-    #[Routing(url: '{page}', method: 'GET')]
+    #[Routing(url: 'page/{page}', method: 'GET')]
     public function actionIndex(string $page = '1')
     {
         $pagination = new Pagination($page, 5, Materials::numRows());
