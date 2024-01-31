@@ -2,6 +2,7 @@
 
 namespace App\Ship;
 
+use App\Containers\Auth\Listeners\AccessListener;
 use App\Containers\Web\Listeners\MessageListener;
 use App\Containers\Web\Observers\TestObserver;
 use App\Ship\Utils\HelperTrait;
@@ -27,5 +28,6 @@ class ShipController extends Controller
     {
         Dispatcher::addListener('message', [MessageListener::class, 'info']);
         Dispatcher::attachObserver('one', [TestObserver::class, 'onEvent'], __CLASS__);
+        Dispatcher::addListener('RoleAccess', [AccessListener::class, 'accessToRoleResources']);
     }
 }

@@ -1,8 +1,7 @@
 <?php
 
-namespace Db\Seeds;
+namespace App\Ship\Seeds;
 
-use Db\AbstractSeed;
 use Rudra\Auth\AuthFacade as Auth;
 
 class Users_21012021144905_seed extends AbstractSeed
