@@ -113,7 +113,7 @@ class Materials extends Model
             'csrf_field' => Validation::sanitize($fields['csrf_field'])->csrf(Session::get('csrf_token'))->run(),
             'redirect'   => Validation::sanitize($fields['redirect'])->run(),
             'title'      => Validation::sanitize($fields['title'])->run(),
-            'text'       => Validation::sanitize($fields['text'])->run(),
+            'text'       => Validation::set(htmlspecialchars($fields['text']))->run(),
             'slug'       => Validation::sanitize($additional['slug'])->run(),
             'image'      => Validation::sanitize($additional['image'])->run(),
         ];

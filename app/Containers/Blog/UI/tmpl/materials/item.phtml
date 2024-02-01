@@ -1,5 +1,3 @@
-<?php use Rudra\Container\Facades\Rudra; ?>
-
 <br>
 <h2><?= $material['title']?></h2>
-<p><?= $material['text']?></p>
+<p><?= htmlspecialchars_decode($material['text'])?></p>

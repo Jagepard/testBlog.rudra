@@ -6,10 +6,11 @@ use App\Containers\Blog\UI\UI;
 <br>
 <?php foreach($materials as $material): ?>
 
-    <h2><a href="<?= Rudra::config()->get('url') ?>/material/<?= $material['id'] ?>_<?= $material['slug'] ?>"><?= $material['title']?></a></h2>
-
-    <p><?= $material['text']?></p>
+    <h2><a class="link-underline link-underline-opacity-0" href="<?= Rudra::config()->get('url') ?>/material/<?= $material['id'] ?>_<?= $material['slug'] ?>"><?= $material['title']?></a></h2>
+    <p><?= htmlspecialchars_decode($material['text'])?></p>
 
 <?php endforeach; ?>
 
-<?= UI::renderLinks($links, $page, $pg_limit, '/page/'); ?>
+<?php if (count($links) > 1): ?>
+    <?= UI::renderLinks($links, $page, $pg_limit, '/page/'); ?>
+<?php endif; ?>
