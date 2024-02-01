@@ -3,9 +3,19 @@ use Rudra\Container\Facades\Rudra;
 use Rudra\Container\Facades\Session;
 ?>
 <br>
-<form action="<?= Rudra::config()->get('url') ?>/admin/material/update/<?= $material['id'] ?>" method="post">
+<?php if (!empty($material['image'])): ?>
+  <img src="<?= Rudra::config()->get('url') ?>/images/<?= $material['image']?>" height="250">
+  <a href="<?= Rudra::config()->get('url') ?>/admin/material/delimg?id=<?= $material['id'] ?>"><button type="button" class="btn btn-danger">delete</button></a>
+<?php endif; ?>
+<form action="<?= Rudra::config()->get('url') ?>/admin/material/update/<?= $material['id'] ?>" method="post" enctype="multipart/form-data">
 <input type='hidden' name='csrf_field' value='<?= Session::get('csrf_token')[0]; ?>'>
 <input type='hidden' name='redirect' value='<?= $redirect; ?>'>
+<input type='hidden' name='image' value='<?= $material['image']?>'>
+<br>
+  <div class="mb-3">
+    <label for="file" class="form-label">Фото</label>
+    <input type="file" name="file" id="file">
+  </div>
   <div class="mb-3">
     <label for="title" class="form-label">Заголовок</label>
     <input type="text" class="form-control" id="title" name="title" value="<?= $material['title']?>">

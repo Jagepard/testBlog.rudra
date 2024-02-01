@@ -86,4 +86,12 @@ class MaterialsController extends AdminController
     {
         Materials::deleteMaterial();
     }
+
+    ##### Удаление картинки\ #####
+
+    #[Routing(url: 'admin/material/delimg', method: 'GET')]
+    public function delimg()
+    {
+        Materials::delImgMaterial();
+    }
 }
