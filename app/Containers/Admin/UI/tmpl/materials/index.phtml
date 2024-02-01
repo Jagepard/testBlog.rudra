@@ -3,12 +3,11 @@ use Rudra\Container\Facades\Rudra;
 use App\Containers\Admin\UI\UI;
 use Rudra\Container\Facades\Session;
 ?>
-
 <br>
 <div class="row">
     <div class="col-10">
       <br>
-      <h1>Dashboard</h1>
+      <a class="link-underline link-underline-opacity-0" href="<?= Rudra::config()->get('url') ?>/admin"><h1>Dashboard</h1></a>
     </div>
     <div class="col border">
     <?php if(Session::has("user")) : ?>
@@ -22,12 +21,13 @@ use Rudra\Container\Facades\Session;
 <tr>
     <td>#</td>
     <td></td>
+    <td></td>
     <td><a href="<?= Rudra::config()->get('url') ?>/admin/material/add"><button type="button" class="btn btn-info">add</button></a></td>
 </tr>
 <?php foreach($materials as $material): ?>
     <tr>
-
     <td><p><?= $material['id']?></p></td>
+    <td><?php if (!empty($material['image'])): ?><img src="<?= Rudra::config()->get('url') ?>/images/thumb/<?= $material['image']?>"><?php endif; ?></td>
     <td><p><?= $material['title']?></p></td>
 
     <td>
@@ -36,10 +36,10 @@ use Rudra\Container\Facades\Session;
         <a href="<?= Rudra::config()->get('url') ?>/admin/material/delete?id=<?= $material['id'] ?>"><button type="button" class="btn btn-danger">delete</button></a>
     </div>
     </td>
-
     </tr>
 <?php endforeach; ?>
 
 </table>
-
-<?= UI::renderLinks($links, $page, $pg_limit, '/admin/materials/'); ?>
+<?php if (count($links) > 1): ?>
+    <?= UI::renderLinks($links, $page, $pg_limit, '/admin/materials/'); ?>
+<?php endif; ?>
