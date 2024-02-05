@@ -17,7 +17,15 @@ use Rudra\Container\Facades\Session;
   </div>
   <div class="mb-3">
     <label for="text" class="form-label">Текст</label>
-    <textarea class="form-control" id="text" name="text"></textarea>
+    <textarea class="form-control" id="editor" name="text"></textarea>
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+    <script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+    </script>
   </div>
   <button type="submit" class="btn btn-primary">Добавить</button>
 </form>
