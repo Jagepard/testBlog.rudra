@@ -1,3 +1,5 @@
+<?php use Rudra\Container\Facades\Rudra; ?>
 <br>
+<img src="<?= Rudra::config()->get('url') ?>/images/<?= $material['image'] ?>" class="card-img-top" alt="<?= $material['title']?>">
 <h2><?= $material['title']?></h2>
 <p><?= htmlspecialchars_decode($material['text'])?></p>
