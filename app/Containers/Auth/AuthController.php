@@ -7,7 +7,7 @@ use Rudra\View\ViewFacade as View;
 
 class AuthController extends ShipController
 {
-    public function init()
+    public function containerInit()
     {
         View::setup(dirname(__DIR__) . '/', "Auth/UI/tmpl", "Auth/UI/cache");
 
