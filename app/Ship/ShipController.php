@@ -2,19 +2,17 @@
 
 namespace App\Ship;
 
-use App\Containers\Auth\Listeners\AccessListener;
-use App\Containers\Web\Listeners\MessageListener;
-use App\Containers\Web\Observers\TestObserver;
 use App\Ship\Utils\HelperTrait;
 use Rudra\Controller\Controller;
 use Rudra\Container\Facades\Rudra;
+use App\Containers\Auth\Listeners\AccessListener;
 use Rudra\EventDispatcher\EventDispatcherFacade as Dispatcher;
 
 class ShipController extends Controller
 {
     use HelperTrait;
 
-    public function generalPreCall()
+    public function shipInit()
     {
         if (Rudra::config()->get("environment") === "development") {
             Rudra::get("debugbar")['time']->stopMeasure('routing');
@@ -22,12 +20,7 @@ class ShipController extends Controller
                 "debugbar" => Rudra::get("debugbar")->getJavascriptRenderer(),
             ]);
         }
-    }
 
-    public function eventRegistration()
-    {
-        Dispatcher::addListener('message', [MessageListener::class, 'info']);
-        Dispatcher::attachObserver('one', [TestObserver::class, 'onEvent'], __CLASS__);
         Dispatcher::addListener('RoleAccess', [AccessListener::class, 'accessToRoleResources']);
     }
 }

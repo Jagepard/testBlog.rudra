@@ -13,4 +13,4 @@ class Users extends Model
 {
     public static string $table = "users";
     public static string $directory = __DIR__;
-}  
+}

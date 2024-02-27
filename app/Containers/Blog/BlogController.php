@@ -12,7 +12,7 @@ class BlogController extends ShipController
     use HelperTrait;
     use Translator;
 
-    public function init()
+    public function containerInit()
     {
         View::setup(dirname(__DIR__) . '/', "Blog/UI/tmpl", "Blog/UI/cache");
 

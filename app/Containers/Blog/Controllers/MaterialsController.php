@@ -2,9 +2,9 @@
 
 namespace App\Containers\Blog\Controllers;
 
+use Rudra\Pagination;
 use App\Containers\Blog\BlogController;
 use App\Containers\Blog\Models\Materials;
-use Rudra\Pagination;
 
 class MaterialsController extends BlogController
 {
@@ -13,15 +13,15 @@ class MaterialsController extends BlogController
     public function actionIndex(string $page = '1')
     {
         $pagination = new Pagination($page, 5, Materials::numRows());
-        $paginated = Materials::getAllPerPage($pagination);
+        $paginated  = Materials::getAllPerPage($pagination);
 
         data([
             "title"   => "title",
             "content" => view("materials/index", [
                 'materials' => $paginated,
-                "links"    => $pagination->getLinks(),
-                "page"     => $page,
-                "pg_limit" => 2
+                "links"     => $pagination->getLinks(),
+                "page"      => $page,
+                "pg_limit"  => 2
             ]),
         ]);
 

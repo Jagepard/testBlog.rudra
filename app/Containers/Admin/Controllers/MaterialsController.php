@@ -2,10 +2,10 @@
 
 namespace App\Containers\Admin\Controllers;
 
+use Rudra\Pagination;
+use Rudra\Container\Facades\Request;
 use App\Containers\Admin\AdminController;
 use App\Containers\Admin\Models\Materials;
-use Rudra\Container\Facades\Request;
-use Rudra\Pagination;
 
 class MaterialsController extends AdminController
 {
@@ -17,15 +17,15 @@ class MaterialsController extends AdminController
     public function materials(string $page = '1')
     {
         $pagination = new Pagination($page, 5, Materials::numRows());
-        $paginated = Materials::getAllPerPage($pagination);
+        $paginated  = Materials::getAllPerPage($pagination);
 
         data([
             "title"   => "title",
             "content" => view("materials/index", [
                 'materials' => $paginated,
-                "links"    => $pagination->getLinks(),
-                "page"     => $page,
-                "pg_limit" => 2
+                "links"     => $pagination->getLinks(),
+                "page"      => $page,
+                "pg_limit"  => 2
             ]),
         ]);
 

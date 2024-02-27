@@ -2,10 +2,10 @@
 
 namespace App\Containers\Auth\Controllers;
 
-use App\Containers\Auth\AuthController;
-use App\Containers\Auth\Models\Login;
-use Rudra\Container\Facades\Request;
 use Rudra\Auth\AuthFacade as Auth;
+use Rudra\Container\Facades\Request;
+use App\Containers\Auth\Models\Login;
+use App\Containers\Auth\AuthController;
 
 class LoginController extends AuthController
 {

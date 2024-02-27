@@ -2,10 +2,10 @@
 
 namespace App\Containers\Admin\Models;
 
-use Rudra\Container\Facades\Request;
+use Rudra\Model\Model;
 use Rudra\Container\Facades\Rudra;
 use Rudra\Container\Facades\Session;
-use Rudra\Model\Model;
+use Rudra\Container\Facades\Request;
 use Rudra\Redirect\RedirectFacade as Redirect;
 use Rudra\Validation\ValidationFacade as Validation;
 
@@ -19,23 +19,17 @@ class Materials extends Model
 
     public static function createMaterial(string $slug): void
     {
-        $imgName = '';
+        $imgName      = '';
+        $uploadedFile = Request::files()->get("file");
 
-        if (!empty(Request::files()->get("file")['tmp_name'])) {
-            $image     = self::imageCreate(exif_imagetype(Request::files()->get("file")['tmp_name']), Request::files()->get("file")['tmp_name']);
-            $uploadDir = Rudra::config()->get('app.path') . "/public/images/";
+        if (!empty($uploadedFile['tmp_name'])) {
+            $imgName = time() . '_' . basename($uploadedFile['name']);
+            $GDimage = Materials::createGDimage(exif_imagetype($uploadedFile['tmp_name']), $uploadedFile['tmp_name']);
 
-            if ($image) {
-                $imgName = time() . '_' . basename(Request::files()->get("file")['name']);
-
-                if (move_uploaded_file(Request::files()->get("file")['tmp_name'], $uploadDir . $imgName)) {
-                    $imgResized = imagescale($image, 50);
-                    imagejpeg($imgResized, $uploadDir . 'thumb/' . $imgName);
-                }
-            }
+            Materials::addImages($uploadedFile, $imgName, $GDimage);
         }
 
-        $processed = self::validate(['slug' => $slug,'image' => $imgName], Request::post()->get());
+        $processed = Materials::validate(['slug' => $slug,'image' => $imgName], Request::post()->get());
         $validated = Validation::getValidated($processed, ['csrf_field', 'redirect']);
 
         if (Validation::approve($processed)) {
@@ -47,29 +41,18 @@ class Materials extends Model
 
     public static function updateMaterial(string $id, string $slug): void
     {
-        $imgName = '';
+        $imgName      = '';
+        $uploadedFile = Request::files()->get("file");
 
-        if (!empty(Request::files()->get("file")['tmp_name'])) {
-            $image     = self::imageCreate(exif_imagetype(Request::files()->get("file")['tmp_name']), Request::files()->get("file")['tmp_name']);
-            $uploadDir = Rudra::config()->get('app.path') . "/public/images/";
+        if (!empty($uploadedFile['tmp_name'])) {
+            $imgName   = time() . '_' . basename($uploadedFile['name']);
+            $GDimage   = Materials::createGDimage(exif_imagetype($uploadedFile['tmp_name']), $uploadedFile['tmp_name']);
+            $oldImage  = Request::post()->get("image");
 
-            if ($image) {
-                $imgName = time() . '_' . basename(Request::files()->get("file")['name']);
-    
-                if (move_uploaded_file(Request::files()->get("file")['tmp_name'], $uploadDir . $imgName)) {
-                    $imgResized = imagescale($image, 50);
-                    imagejpeg($imgResized, $uploadDir . 'thumb/' . $imgName);
-                }
-            }
-
-            $oldImage = Request::post()->get("image");
-
-            if (!empty($oldImage)) {
-                self::removeImg($uploadDir . $oldImage);
-                self::removeImg($uploadDir . 'thumb/' . $oldImage);
-            }
+            Materials::addImages($uploadedFile, $imgName, $GDimage);
+            Materials::delImages($oldImage);
         } else {
-            $imgName = Request::post()->get("image");
+            $imgName = $oldImage;
         }
 
         $processed = self::validate(['slug' => $slug,'image' => $imgName], Request::post()->get());
@@ -85,12 +68,7 @@ class Materials extends Model
     {
         $material = Materials::find(Request::get()->get('id'));
 
-        if(!empty($material['image'])) {
-            $uploadDir = Rudra::config()->get('app.path') . "/public/images/";
-            self::removeImg($uploadDir . $material['image']);
-            self::removeImg($uploadDir . 'thumb/' . $material['image']);
-        }
-
+        Materials::delImages($material['image']);
         Materials::delete(Request::get()->get('id'));
         Redirect::run(Request::server()->get('HTTP_REFERER'), "full");
     }
@@ -102,8 +80,7 @@ class Materials extends Model
         $uploadDir = Rudra::config()->get('app.path') . "/public/images/";
 
         Materials::update($id, ['image' => '']);
-        self::removeImg($uploadDir . $material['image']);
-        self::removeImg($uploadDir . 'thumb/' . $material['image']);
+        Materials::delImages($material['image']);
         Redirect::run(Request::server()->get('HTTP_REFERER'), "full");
     }
 
@@ -119,7 +96,7 @@ class Materials extends Model
         ];
     }
 
-    private static function imageCreate($type, $file)
+    private static function createGDimage($type, $file)
     {
         switch ($type) {
             case IMAGETYPE_JPEG:
@@ -140,6 +117,24 @@ class Materials extends Model
     {
         if (file_exists($imgLink)) {
             unlink($imgLink);
+        }
+    }
+
+    private static function addImages(array $uploadedFile, string $imgName, \GdImage $GDimage): void
+    {
+        if ($GDimage) {
+            if (move_uploaded_file($uploadedFile['tmp_name'], config('admin', 'images_path') . $imgName)) {
+                $imgResized = imagescale($GDimage, config('admin', 'thumb_width'));
+                imagejpeg($imgResized, config('admin', 'images_path') . 'thumb/' . $imgName);
+            }
+        }
+    }
+
+    private static function delImages(string $imgName): void
+    {
+        if(!empty($imgName)) {
+            Materials::removeImg(config('admin', 'images_path') . $imgName);
+            Materials::removeImg(config('admin', 'images_path') . 'thumb/' . $imgName);
         }
     }
 }
