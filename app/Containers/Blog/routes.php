@@ -2,5 +2,5 @@
 
 return [
 
-    \App\Containers\Blog\Controllers\MaterialsController::class,
+    \App\Containers\Blog\Controller\MaterialsController::class,
 ];

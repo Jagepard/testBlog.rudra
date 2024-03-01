@@ -13,13 +13,14 @@ Rudra::run()->config((php_sapi_name() == "cli-server")
     ? Yaml::parseFile("../config/setting.local.yml")
     : Yaml::parseFile("../config/setting.production.yml"));
 
-Rudra::run()->config()->set(["url" => (php_sapi_name() == "cli-server")
-    ? "http://127.0.0.1:8000"
-    : Rudra::run()->request()->server()->get("REQUEST_SCHEME") . "://" . Rudra::run()->request()->server()->get("SERVER_NAME")]);
+Rudra::run()->config()->set([
+    "url" => (php_sapi_name() == "cli-server") ? "http://127.0.0.1:8000" 
+    : Rudra::run()->request()->server()->get("REQUEST_SCHEME") . "://" . Rudra::run()->request()->server()->get("SERVER_NAME")
+]);
 
 Rudra::run()->config()->set(require_once "../app/Ship/Services.php");
 Rudra::run()->binding(Rudra::run()->config()->get("contracts"));
-Rudra::run()->serviceList(Rudra::run()->config()->get("services"));
+Rudra::run()->services(Rudra::run()->config()->get("services"));
 
 if (Rudra::run()->config()->get("environment") === "development") {
     Rudra::run()->get("debugbar")->addCollector(new DebugBar\DataCollector\PDO\PDOCollector(new DebugBar\DataCollector\PDO\TraceablePDO(Rudra::run()->get("DSN"))));

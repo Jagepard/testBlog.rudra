@@ -5,7 +5,7 @@ namespace App\Containers\Admin\Controllers;
 use Rudra\Pagination;
 use Rudra\Container\Facades\Request;
 use App\Containers\Admin\AdminController;
-use App\Containers\Admin\Models\Materials;
+use App\Containers\Admin\Entity\Materials;
 
 class MaterialsController extends AdminController
 {
@@ -13,7 +13,7 @@ class MaterialsController extends AdminController
 
     #[Routing(url: 'admin', method: 'GET')]
     #[Routing(url: 'admin/materials', method: 'GET')]
-    #[Routing(url: 'admin/materials/{page}', method: 'GET')]
+    #[Routing(url: 'admin/materials/:page', method: 'GET')]
     public function materials(string $page = '1')
     {
         $pagination = new Pagination($page, 5, Materials::numRows());
@@ -55,7 +55,7 @@ class MaterialsController extends AdminController
 
     ##### Обновление #####
 
-    #[Routing(url: 'admin/material/edit/{slug}')]
+    #[Routing(url: 'admin/material/edit/:slug')]
     public function edit(string $slug)
     {
         $material = Materials::find($this->getIdFromSlug($slug));
@@ -71,7 +71,7 @@ class MaterialsController extends AdminController
         render("layout", data());
     }
 
-    #[Routing(url: 'admin/material/update/{slug}', method: 'POST')]
+    #[Routing(url: 'admin/material/update/:slug', method: 'POST')]
     public function update(string $slug)
     {
         Materials::updateMaterial($this->getIdFromSlug($slug), $this->translit(Request::post()->get('title')));
