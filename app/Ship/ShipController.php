@@ -5,7 +5,7 @@ namespace App\Ship;
 use App\Ship\Utils\HelperTrait;
 use Rudra\Controller\Controller;
 use Rudra\Container\Facades\Rudra;
-use App\Containers\Auth\Listeners\AccessListener;
+use App\Containers\Auth\Listener\AccessListener;
 use Rudra\EventDispatcher\EventDispatcherFacade as Dispatcher;
 
 class ShipController extends Controller

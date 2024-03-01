@@ -3,8 +3,8 @@
 namespace App\Containers\Auth\Controllers;
 
 use Rudra\Auth\AuthFacade as Auth;
+use App\Containers\Auth\Task\Login;
 use Rudra\Container\Facades\Request;
-use App\Containers\Auth\Models\Login;
 use App\Containers\Auth\AuthController;
 
 class LoginController extends AuthController
@@ -19,7 +19,7 @@ class LoginController extends AuthController
     #[Routing(url: 'auth/login', method: 'POST')]
     public function login()
     {
-        Login::run(Request::post()->get());
+        (new Login())->run(Request::post()->get());
     }
 
     #[Routing(url: 'logout')]
