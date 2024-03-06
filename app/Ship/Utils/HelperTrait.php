@@ -3,6 +3,7 @@
 namespace App\Ship\Utils;
 
 use Rudra\Container\Facades\Rudra;
+use Rudra\Redirect\RedirectFacade as Redirect;
 
 trait HelperTrait
 {
@@ -25,5 +26,12 @@ trait HelperTrait
         }
 
         return Request::post()->get($field);
+    }
+
+    protected function handle404($data)
+    {
+        if (!$data) {
+            Redirect::run("404");
+        }
     }
 }
