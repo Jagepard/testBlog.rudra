@@ -8,7 +8,7 @@
 
 ```
 composer create-project --prefer-dist rudra/framework=dev-master testBlog_rudra
-cd newapp
+cd testBlog_rudra
 composer dumpautoload -o
 ```
 
