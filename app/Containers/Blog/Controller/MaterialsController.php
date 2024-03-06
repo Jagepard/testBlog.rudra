@@ -3,6 +3,7 @@
 namespace App\Containers\Blog\Controller;
 
 use Rudra\Pagination;
+use Rudra\Exceptions\RouterException;
 use App\Containers\Blog\BlogController;
 use App\Containers\Blog\Entity\Materials;
 
@@ -16,7 +17,7 @@ class MaterialsController extends BlogController
         $paginated  = Materials::getAllPerPage($pagination);
 
         data([
-            "title"   => "title",
+            "title"   => data('title') . __METHOD__,
             "content" => view("materials/index", [
                 'materials' => $paginated,
                 "links"     => $pagination->getLinks(),
@@ -33,6 +34,8 @@ class MaterialsController extends BlogController
     {
         $id       = $this->getIdFromSlug($slug);
         $material = Materials::find($id);
+
+        $this->handle404($material);
 
         data([
             "title"   => $material['title'],

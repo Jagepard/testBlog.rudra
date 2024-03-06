@@ -16,7 +16,8 @@ class Materials_26012024191954_migration
             `slug` VARCHAR(255) NOT NULL , 
             `title` VARCHAR(255) NOT NULL , 
             `text` TEXT ,
-            `status` INT NOT NULL ,
+            `image` VARCHAR(255) NOT NULL DEFAULT '',
+            `status` INT NOT NULL DEFAULT 1,
             `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
             `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 PRIMARY KEY (`id`)
