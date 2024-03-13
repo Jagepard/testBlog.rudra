@@ -10,6 +10,9 @@
 git clone git@github.com:Jagepard/testBlog.rudra.git
 ```
 ```
+cd testBlog.rudra
+```
+```
 composer install
 ```
 
@@ -47,4 +50,13 @@ php rudra run
 or
 ```
 php rudra serve
+```
+Admin panel:
+```
+http://127.0.0.1:8000/admin
+```
+User identity:
+```
+Login: admin@admin.com
+Password: password
 ```

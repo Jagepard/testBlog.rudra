@@ -12,7 +12,7 @@ class Users_21012021144905_seed extends AbstractSeed
         $fields = [
             "name"     => "Admin",
             "email"    => "admin@admin.com",
-            "password" => Auth::bcrypt(123),
+            "password" => Auth::bcrypt('password'),
             "role"     => "admin",
             "status"   => 1,
         ];
