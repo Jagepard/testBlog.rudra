@@ -7,9 +7,10 @@
 # testBlog_rudra
 
 ```
-composer create-project --prefer-dist rudra/framework=dev-master testBlog_rudra
-cd testBlog_rudra
-composer dumpautoload -o
+git clone git@github.com:Jagepard/testBlog.rudra.git
+```
+```
+composer install
 ```
 
 Create a database, for example: ```testBlog_rudra```
