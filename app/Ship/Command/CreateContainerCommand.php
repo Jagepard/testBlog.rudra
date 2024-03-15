@@ -13,7 +13,7 @@ class CreateContainerCommand extends FileCreator
      * -----------------------------
      * Создает файл с данными Seed
      */
-    public function actionIndex()
+    public function actionIndex(): void
     {
         Cli::printer("Enter container name: ", "magneta");
         $container = ucfirst(str_replace(PHP_EOL, "", Cli::reader()));
@@ -28,7 +28,7 @@ class CreateContainerCommand extends FileCreator
 
             $this->writeFile(
                 [str_replace('/', DIRECTORY_SEPARATOR, Rudra::config()->get('app.path') . "/app/Containers/$container/"), "{$className}.php"],
-                $this->createContainersConroller($className, $container)
+                $this->createContainersController($className, $container)
             );
 
             $this->writeFile(
@@ -52,8 +52,10 @@ class CreateContainerCommand extends FileCreator
      * Creates class data
      * ------------------
      * Создает данные класса
+     *
+     * @return string
      */
-    private function createContainersConroller(string $className, string $container)
+    private function createContainersController(string $className, string $container): string
     {
         return <<<EOT
 <?php
@@ -62,8 +64,9 @@ namespace App\Containers\\{$container};
 
 use App\Ship\ShipController;
 use Rudra\View\ViewFacade as View;
+use Rudra\Controller\ConainersControllerInterface;
 
-class {$container}Controller extends ShipController
+class {$container}Controller extends ShipController implements ConainersControllerInterface
 {
     public function containerInit()
     {
@@ -82,7 +85,7 @@ EOT;
      * ------------------
      * Создает файл маршрутизатора
      */
-    private function createRoutes()
+    private function createRoutes(): string
     {
         return <<<EOT
 <?php
@@ -93,14 +96,9 @@ EOT;
     }
 
     /**
-     * @param $path
-     * @param $callable
-     *
-     * Create UI directories
-     * ---------------------
-     * Создает каталоги для UI
+     * @param string $path
      */
-    private function createDirectories(string $path)
+    private function createDirectories(string $path): void
     {
         if (!is_dir($path . 'UI')) {
             mkdir($path . 'UI', 0755, true);
@@ -115,7 +113,11 @@ EOT;
         }
     }
 
-    public function addConfig(string $container)
+    /**
+     * @param string $container
+     * @return void
+     */
+    public function addConfig(string $container): void
     {
         $path      = str_replace('/', DIRECTORY_SEPARATOR, Rudra::config()->get('app.path') . "/config/setting.local.yml");
         $namespace = strtolower($container) . ": App\Containers\\{$container}\\";

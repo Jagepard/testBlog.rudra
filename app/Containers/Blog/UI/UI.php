@@ -6,7 +6,7 @@ use Rudra\Container\Facades\Rudra;
 
 class UI
 {
-    public static function renderLinks(array $links, string $page, $pg_limit, $uri)
+    public static function renderLinks(array $links, string $page, $pg_limit, $uri): void
     {
         $last = array_key_last($links) + 1;
         ?>

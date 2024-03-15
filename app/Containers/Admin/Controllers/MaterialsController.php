@@ -9,12 +9,10 @@ use App\Containers\Admin\Entity\Materials;
 
 class MaterialsController extends AdminController
 {
-    ##### Чтение\ #####
-
     #[Routing(url: 'admin', method: 'GET')]
     #[Routing(url: 'admin/materials', method: 'GET')]
     #[Routing(url: 'admin/materials/:page', method: 'GET')]
-    public function materials(string $page = '1')
+    public function materials(string $page = '1'): void
     {
         $pagination = new Pagination($page, 5, Materials::numRows());
         $paginated  = Materials::getAllPerPage($pagination);
@@ -32,10 +30,8 @@ class MaterialsController extends AdminController
         render("layout", data());
     }
 
-    ##### Создание #####
-
     #[Routing(url: 'admin/material/add')]
-    public function add()
+    public function add(): void
     {
         data([
             "title"   => 'Добавить',
@@ -46,17 +42,13 @@ class MaterialsController extends AdminController
     }
 
     #[Routing(url: 'admin/material/create', method: 'POST')]
-    public function create()
+    public function create(): void
     {
         Materials::createMaterial($this->translit(Request::post()->get('title')));
     }
 
-    ##### \Создание #####
-
-    ##### Обновление #####
-
     #[Routing(url: 'admin/material/edit/:slug')]
-    public function edit(string $slug)
+    public function edit(string $slug): void
     {
         $material = Materials::find($this->getIdFromSlug($slug));
 
@@ -72,25 +64,19 @@ class MaterialsController extends AdminController
     }
 
     #[Routing(url: 'admin/material/update/:slug', method: 'POST')]
-    public function update(string $slug)
+    public function update(string $slug): void
     {
         Materials::updateMaterial($this->getIdFromSlug($slug), $this->translit(Request::post()->get('title')));
     }
 
-    ##### \Обновление #####
-
-    ##### Удаление\ #####
-
     #[Routing(url: 'admin/material/delete', method: 'GET')]
-    public function delete()
+    public function delete(): void
     {
         Materials::deleteMaterial();
     }
 
-    ##### Удаление картинки\ #####
-
     #[Routing(url: 'admin/material/delimg', method: 'GET')]
-    public function delimg()
+    public function delimg(): void
     {
         Materials::delImgMaterial();
     }
