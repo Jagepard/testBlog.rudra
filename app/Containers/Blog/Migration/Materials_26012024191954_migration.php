@@ -6,7 +6,7 @@ use Rudra\Container\Facades\Rudra;
 
 class Materials_26012024191954_migration
 {
-    public function up()
+    public function up(): void
     {
         $table = "materials";
 

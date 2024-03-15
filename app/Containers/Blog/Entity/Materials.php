@@ -2,10 +2,13 @@
 
 namespace App\Containers\Blog\Entity;
 
+use Rudra\Pagination;
 use Rudra\Model\Entity;
 
 /**
- * @see App\Containers\Blog\Repository\MaterialsRepository
+ * @method static numRows()
+ * @method static find(string $id)
+ * @method static getAllPerPage(Pagination $pagination)
  */
 class Materials extends Entity
 {

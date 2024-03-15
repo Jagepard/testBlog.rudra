@@ -12,7 +12,7 @@ class ShipController extends Controller
 {
     use HelperTrait;
 
-    public function shipInit()
+    public function shipInit(): void
     {
         if (Rudra::config()->get("environment") === "development") {
             Rudra::get("debugbar")['time']->stopMeasure('routing');

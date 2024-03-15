@@ -6,13 +6,14 @@ use App\Ship\ShipController;
 use App\Ship\Utils\Translator;
 use Rudra\Container\Facades\Rudra;
 use Rudra\View\ViewFacade as View;
+use Rudra\Controller\ConainersControllerInterface;
 use Rudra\EventDispatcher\EventDispatcherFacade as Dispatcher;
 
-class AdminController extends ShipController
+class AdminController extends ShipController implements ConainersControllerInterface
 {
     use Translator;
 
-    public function containerInit()
+    public function containerInit(): void
     {
         Dispatcher::dispatch('RoleAccess', 'admin');
         View::setup(dirname(__DIR__) . '/', "Admin/UI/tmpl", "Admin/UI/cache");

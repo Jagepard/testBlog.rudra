@@ -4,11 +4,10 @@ namespace App\Containers\Auth\Repository;
 
 use Rudra\Model\QBFacade;
 use Rudra\Model\Repository;
-use App\Containers\Auth\Models\Users;
 
 class UsersRepository extends Repository
 {
-    public function getUser(string $email)
+    public function getUser(string $email): ?array
     {
         $qString = QBFacade::select()
             ->from($this->table)

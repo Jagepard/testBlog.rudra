@@ -6,7 +6,7 @@ use App\Ship\Seed\AbstractSeed;
 
 class Materials_26012024201942_seed extends AbstractSeed
 {
-    public function create()
+    public function create(): void
     {
         $table = "materials";
 

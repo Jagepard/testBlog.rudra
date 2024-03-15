@@ -3,6 +3,7 @@
 namespace App\Containers\Admin\Model;
 
 use Rudra\Model\Model;
+use Rudra\Model\Repository;
 use Rudra\Container\Facades\Rudra;
 use Rudra\Container\Facades\Session;
 use Rudra\Container\Facades\Request;
@@ -10,7 +11,12 @@ use Rudra\Redirect\RedirectFacade as Redirect;
 use Rudra\Validation\ValidationFacade as Validation;
 
 /**
- * @see MaterialsRepository
+ * @see Repository
+ *
+ * @method find($id)
+ * @method delete($get)
+ * @method create(array $validated)
+ * @method update(string $id, array $validated)
  */
 class Materials extends Model
 {
@@ -26,7 +32,7 @@ class Materials extends Model
             $this->addImages($uploadedFile, $imgName, $GDimage);
         }
 
-        $processed = $this->validate(['slug' => $slug,'image' => $imgName], Request::post()->get());
+        $processed = $this->validate(['slug' => $slug,'image' => $imgName], (array) Request::post()->get());
         $validated = Validation::getValidated($processed, ['csrf_field', 'redirect']);
 
         if (Validation::approve($processed)) {
@@ -38,7 +44,6 @@ class Materials extends Model
 
     public function updateMaterial(string $id, string $slug): void
     {
-        $imgName      = '';
         $uploadedFile = Request::files()->get("file");
         $oldImage     = Request::post()->get("image");
 
@@ -52,7 +57,7 @@ class Materials extends Model
             $imgName = $oldImage;
         }
 
-        $processed = self::validate(['slug' => $slug,'image' => $imgName], Request::post()->get());
+        $processed = self::validate(['slug' => $slug,'image' => $imgName], (array) Request::post()->get());
         $validated = Validation::getValidated($processed, ['csrf_field']);
         $redirect  = $validated["redirect"];
         unset($validated["redirect"]);
@@ -74,7 +79,6 @@ class Materials extends Model
     {
         $id        = Request::get()->get('id');
         $material  = $this->find($id);
-        $uploadDir = Rudra::config()->get('app.path') . "/public/images/";
 
         $this->update($id, ['image' => '']);
         $this->delImages($material['image']);
@@ -84,30 +88,23 @@ class Materials extends Model
     private function validate(array $additional, array $fields): array
     {
         return [
-            'csrf_field' => Validation::sanitize($fields['csrf_field'])->csrf(Session::get('csrf_token'))->run(),
-            'redirect'   => Validation::sanitize($fields['redirect'])->run(),
             'title'      => Validation::sanitize($fields['title'])->run(),
-            'text'       => Validation::set(htmlspecialchars($fields['text']))->run(),
             'slug'       => Validation::sanitize($additional['slug'])->run(),
+            'redirect'   => Validation::sanitize($fields['redirect'])->run(),
             'image'      => Validation::sanitize($additional['image'])->run(),
+            'text'       => Validation::set(htmlspecialchars($fields['text']))->run(),
+            'csrf_field' => Validation::sanitize($fields['csrf_field'])->csrf(Session::get('csrf_token'))->run(),
         ];
     }
 
     private function createGDimage($type, $file)
     {
-        switch ($type) {
-            case IMAGETYPE_JPEG:
-                return imagecreatefromjpeg($file);
-                break;
-            case IMAGETYPE_PNG:
-                return imagecreatefrompng($file);
-                break;
-            case IMAGETYPE_GIF:
-                return imagecreatefromgif($file);
-                break;
-            default:
-                return false;
-        }
+        return match ($type) {
+            IMAGETYPE_JPEG => imagecreatefromjpeg($file),
+            IMAGETYPE_PNG  => imagecreatefrompng($file),
+            IMAGETYPE_GIF  => imagecreatefromgif($file),
+            default        => false,
+        };
     }
 
     private function removeImg(string $imgLink): void
@@ -119,11 +116,9 @@ class Materials extends Model
 
     private function addImages(array $uploadedFile, string $imgName, \GdImage $GDimage): void
     {
-        if ($GDimage) {
-            if (move_uploaded_file($uploadedFile['tmp_name'], config('admin', 'images_path') . $imgName)) {
-                $imgResized = imagescale($GDimage, config('admin', 'thumb_width'));
-                imagejpeg($imgResized, config('admin', 'images_path') . 'thumb/' . $imgName);
-            }
+        if (move_uploaded_file($uploadedFile['tmp_name'], config('admin', 'images_path') . $imgName)) {
+            $imgResized = imagescale($GDimage, config('admin', 'thumb_width'));
+            imagejpeg($imgResized, config('admin', 'images_path') . 'thumb/' . $imgName);
         }
     }
 

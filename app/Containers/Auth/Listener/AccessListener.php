@@ -15,7 +15,7 @@ class AccessListener
      * -------------------------------
      * Доступ к материалам на основании роли
      */
-    public function accessToRoleResources($role)
+    public function accessToRoleResources($role): void
     {
         /*
          * General authorization
