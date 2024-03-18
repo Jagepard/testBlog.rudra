@@ -4,9 +4,9 @@ namespace App\Containers\Auth;
 
 use App\Ship\ShipController;
 use Rudra\View\ViewFacade as View;
-use Rudra\Controller\ConainersControllerInterface;
+use Rudra\Controller\ContainerControllerInterface;
 
-class AuthController extends ShipController implements ConainersControllerInterface
+class AuthController extends ShipController implements ContainerControllerInterface
 {
     public function containerInit(): void
     {

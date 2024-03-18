@@ -5,9 +5,9 @@ namespace App\Containers\Blog;
 use App\Ship\ShipController;
 use App\Ship\Utils\HelperTrait;
 use Rudra\View\ViewFacade as View;
-use Rudra\Controller\ConainersControllerInterface;
+use Rudra\Controller\ContainerControllerInterface;
 
-class BlogController extends ShipController implements ConainersControllerInterface
+class BlogController extends ShipController implements ContainerControllerInterface
 {
     use HelperTrait;
 
