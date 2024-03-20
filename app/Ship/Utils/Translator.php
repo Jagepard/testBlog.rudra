@@ -6,9 +6,9 @@ trait Translator
 {
     /**
      * @param string $value
-     * @return false|mixed|string|string[]|null
+     * @return string
      */
-    public function translit(string $value)
+    public function translit(string $value): string
     {
         $converter = [
             'а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd',
@@ -24,16 +24,15 @@ trait Translator
         $value = strtr($value, $converter);
         $value = \mb_ereg_replace('[^-0-9a-z]', '-', $value);
         $value = \mb_ereg_replace('[-]+', '-', $value);
-        $value = trim($value, '-');
 
-        return $value;
+        return trim($value, '-');
     }
 
     /**
      * @param $string
      * @return string
      */
-    public function slugify($string)
+    public function slugify($string): string
     {
         $string = \transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();",
             $string);
