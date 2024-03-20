@@ -28,5 +28,7 @@ class AdminController extends ShipController implements ContainerControllerInter
                 'thumb_width' => 200
             ]
         ]);
+
+        $this->info(get_called_class());
     }
 }

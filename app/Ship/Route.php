@@ -23,14 +23,14 @@ class Route
         throw new RouterException("404");
     }
 
-    protected function collect(array $namespaces)
+    protected function collect(array $namespaces): void
     {
         foreach ($namespaces as $container => $item) {
             $this->getRoutes($container);
         }
     }
 
-    protected function getRoutes(string $container)//: array
+    protected function getRoutes(string $container): ?array
     {
         $path = "../app/Containers/" . ucfirst($container) . "/routes";
 

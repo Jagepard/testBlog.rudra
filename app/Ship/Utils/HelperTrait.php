@@ -3,11 +3,10 @@
 namespace App\Ship\Utils;
 
 use Rudra\Container\Facades\Rudra;
-use Rudra\Redirect\RedirectFacade as Redirect;
 
 trait HelperTrait
 {
-    public function info(string $message): void
+    protected function info(string $message): void
     {
         Rudra::get("debugbar")['messages']->info($message);
     }
@@ -15,8 +14,7 @@ trait HelperTrait
     protected function getIdFromSlug(string $slug): string
     {
         $slug = strip_tags($slug);
-
-        return (strpos($slug, '_') !== false) ? strstr($slug, '_', true) : $slug;
+        return (str_contains($slug, '_')) ? strstr($slug, '_', true) : $slug;
     }
 
     private function handleField(string $field, string $checkBoxName)
@@ -28,7 +26,7 @@ trait HelperTrait
         return Request::post()->get($field);
     }
 
-    protected function handle404($data)
+    protected function handle404($data): void
     {
         if (!$data) {
             Redirect::run("404");

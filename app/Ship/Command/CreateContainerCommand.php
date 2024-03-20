@@ -46,13 +46,12 @@ class CreateContainerCommand extends FileCreator
     }
 
     /**
-     * @param string $className
-     * @param string $container
-     *
      * Creates class data
      * ------------------
      * Создает данные класса
      *
+     * @param string $className
+     * @param string $container
      * @return string
      */
     private function createContainersController(string $className, string $container): string
@@ -63,14 +62,14 @@ class CreateContainerCommand extends FileCreator
 namespace App\Containers\\{$container};
 
 use App\Ship\ShipController;
-use Rudra\View\ViewFacade as View;
-use Rudra\Controller\ConainersControllerInterface;
+use Rudra\UI\ViewFacade as UI;
+use Rudra\Controller\ContainerControllerInterface;
 
-class {$container}Controller extends ShipController implements ConainersControllerInterface
+class {$container}Controller extends ShipController implements ContainerControllerInterface
 {
-    public function containerInit()
+    public function containerInit(): void
     {
-        View::setup(dirname(__DIR__) . '/', "$container/UI/tmpl", "$container/UI/cache");
+        UI::setup(dirname(__DIR__) . '/', "$container/UI/tmpl", "$container/UI/cache");
 
         data([
             "title" => __CLASS__,
@@ -96,7 +95,12 @@ EOT;
     }
 
     /**
+     * Create UI directories
+     * ---------------------
+     * Создает каталоги для UI
+     *
      * @param string $path
+     * @return void
      */
     private function createDirectories(string $path): void
     {
@@ -113,10 +117,6 @@ EOT;
         }
     }
 
-    /**
-     * @param string $container
-     * @return void
-     */
     public function addConfig(string $container): void
     {
         $path      = str_replace('/', DIRECTORY_SEPARATOR, Rudra::config()->get('app.path') . "/config/setting.local.yml");
