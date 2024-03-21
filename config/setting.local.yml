@@ -1,5 +1,4 @@
 secret: ''
-app.path: /home/d/Public/TestBlog/rudra
 environment: development
 cache.time: now
 roles:
