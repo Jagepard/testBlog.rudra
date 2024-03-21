@@ -22,7 +22,6 @@ Rudra::config()->set(require_once "../app/Ship/Services.php");
 Rudra::binding(Rudra::config()->get("contracts"));
 Rudra::waiting(Rudra::config()->get("services"));
 
-
 if (Rudra::config()->get("environment") === "development") {
     Rudra::get("debugbar")->addCollector(new DebugBar\DataCollector\PDO\PDOCollector(new DebugBar\DataCollector\PDO\TraceablePDO(Rudra::get("DSN"))));
     Rudra::get("debugbar")->addCollector(new DebugBar\DataCollector\ConfigCollector(Rudra::config()->get()));
@@ -32,7 +31,17 @@ if (Rudra::config()->get("environment") === "development") {
 
 session_name("RSID_" . Rudra::get(Auth::class)->getSessionHash());
 
-Rudra::get(Route::class)->run();
+// autowire
+// ini_set('zend.exception_ignore_args', 0);
+try {
+    Rudra::get(Route::class)->run();
+} catch (ArgumentCountError $e) {
+    $trace = $e->getTrace()[0];
+    Rudra::autowire(new $trace['class'], $trace['function']);
+} catch (TypeError $e) {
+    $trace = $e->getTrace()[0];
+    Rudra::autowire(new $trace['class'], $trace['function'], $trace['args']);
+}
 
 /*
  | php rudra serve to run built-in web server
