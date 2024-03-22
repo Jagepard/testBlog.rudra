@@ -1,11 +1,11 @@
-<?php
+<?php // ini_set('zend.exception_ignore_args', 0);
 
 require "../vendor/autoload.php";
 
 use App\Ship\Route;
 use Rudra\Auth\Auth;
-use Rudra\Container\Facades\Rudra;
 use Symfony\Component\Yaml\Yaml;
+use Rudra\Container\Facades\Rudra;
 
 (new Whoops\Run)->appendHandler(new Whoops\Handler\PrettyPageHandler)->register();
 
@@ -31,8 +31,6 @@ if (Rudra::config()->get("environment") === "development") {
 
 session_name("RSID_" . Rudra::get(Auth::class)->getSessionHash());
 
-// autowire
-// ini_set('zend.exception_ignore_args', 0);
 try {
     Rudra::get(Route::class)->run();
 } catch (ArgumentCountError $e) {
