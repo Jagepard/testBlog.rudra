@@ -18,7 +18,7 @@ Rudra::config()->set(["url" => (php_sapi_name() == "cli-server")
     : Rudra::request()->server()->get("REQUEST_SCHEME") . "://" . Rudra::request()->server()->get("SERVER_NAME")]);
 
 Rudra::config()->set(["app.path" => realpath('..')]);
-Rudra::config()->set(require_once "../app/Ship/Services.php");
+Rudra::config()->set(require_once "../app/Ship/config.php");
 Rudra::binding(Rudra::config()->get("contracts"));
 Rudra::waiting(Rudra::config()->get("services"));
 
@@ -41,7 +41,7 @@ try {
 } catch (TypeError $e) {
     $trace = $e->getTrace()[0];
     Rudra::autowire(new $trace['class'], $trace['function'], $trace['args']);
-}
+} 
 
 /*
  | php rudra serve to run built-in web server

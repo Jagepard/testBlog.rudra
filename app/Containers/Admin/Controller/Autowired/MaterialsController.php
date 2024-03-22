@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Containers\Admin\Controllers;
+namespace App\Containers\Admin\Controller\Autowired;
 
 use Rudra\Pagination;
-use Rudra\Container\Facades\Request;
 use App\Containers\Admin\AdminController;
 use App\Containers\Admin\Entity\Materials;
+use Rudra\Container\Interfaces\RudraInterface;
+use Rudra\Container\Interfaces\RequestInterface;
 
 class MaterialsController extends AdminController
 {
     #[Routing(url: 'admin', method: 'GET')]
     #[Routing(url: 'admin/materials', method: 'GET')]
     #[Routing(url: 'admin/materials/:page', method: 'GET')]
-    public function materials(string $page = '1'): void
+    public function materials(Materials $materials, string $page = '1'): void
     {
-        $pagination = new Pagination($page, 5, Materials::numRows());
-        $paginated  = Materials::getAllPerPage($pagination);
+        $pagination = new Pagination($page, 5, $materials->numRows());
+        $paginated  = $materials->getAllPerPage($pagination);
 
         data([
             "title"   => "title",
@@ -42,21 +43,21 @@ class MaterialsController extends AdminController
     }
 
     #[Routing(url: 'admin/material/create', method: 'POST')]
-    public function create(): void
+    public function create(RequestInterface $request, Materials $materials): void
     {
-        Materials::createMaterial($this->translit(Request::post()->get('title')));
+        $materials->createMaterial($this->translit($request->post()->get('title')));
     }
 
     #[Routing(url: 'admin/material/edit/:slug')]
-    public function edit(string $slug): void
+    public function edit(RequestInterface $request, Materials $materials, string $slug): void
     {
-        $material = Materials::find($this->getIdFromSlug($slug));
+        $material = $materials->find($this->getIdFromSlug($slug));
 
         data([
             "title"   => $material['title'],
             "content" => view("materials/edit", [
                 'material' => $material,
-                'redirect' => Request::server()->get('HTTP_REFERER')
+                'redirect' => $request->server()->get('HTTP_REFERER')
             ]),
         ]);
 
@@ -64,20 +65,20 @@ class MaterialsController extends AdminController
     }
 
     #[Routing(url: 'admin/material/update/:slug', method: 'POST')]
-    public function update(string $slug): void
+    public function update(RequestInterface $request, Materials $materials, string $slug): void
     {
-        Materials::updateMaterial($this->getIdFromSlug($slug), $this->translit(Request::post()->get('title')));
+        $materials->updateMaterial($this->getIdFromSlug($slug), $this->translit($request->post()->get('title')));
     }
 
     #[Routing(url: 'admin/material/delete', method: 'GET')]
-    public function delete(): void
+    public function delete(Materials $materials): void
     {
-        Materials::deleteMaterial();
+        $materials->deleteMaterial();
     }
 
     #[Routing(url: 'admin/material/delimg', method: 'GET')]
-    public function delimg(): void
+    public function delimg(Materials $materials): void
     {
-        Materials::delImgMaterial();
+        $materials->delImgMaterial();
     }
 }
