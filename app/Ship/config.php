@@ -1,12 +1,15 @@
 <?php
 
 use Rudra\Container\Rudra;
+use Rudra\Container\Request;
 use DebugBar\StandardDebugBar;
 use Rudra\Container\Interfaces\RudraInterface;
+use Rudra\Container\Interfaces\RequestInterface;
 
 return [
     'contracts'   => [
-        RudraInterface::class => Rudra::run(),
+        RudraInterface::class   => Rudra::run(),
+        // RequestInterface::class => Request::class
     ],
     'services'    => [
         "DSN" => [PDO::class, [

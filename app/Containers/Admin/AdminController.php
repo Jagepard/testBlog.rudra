@@ -15,6 +15,11 @@ class AdminController extends ShipController implements ContainerControllerInter
 
     public function containerInit(): void
     {
+        $config = require_once "config.php";
+
+        Rudra::binding()->set($config['contracts']);
+        Rudra::waiting()->set($config['services']);
+
         Dispatcher::dispatch('RoleAccess', 'admin');
         View::setup(dirname(__DIR__) . '/', "Admin/UI/tmpl", "Admin/UI/cache");
 
