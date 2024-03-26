@@ -26,5 +26,6 @@ use App\Containers\Blog\UI\UI;
 </div>
 
 <?php if (count($links) > 1): ?>
+    <br>
     <?= UI::renderLinks($links, $page, $pg_limit, '/page/'); ?>
 <?php endif; ?>
