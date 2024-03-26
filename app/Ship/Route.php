@@ -13,7 +13,7 @@ class Route
      */
     public function run()
     {
-        if (Rudra::config()->get('environment') === 'development') {
+        if (config('environment') === 'development') {
             Rudra::get("debugbar")['time']->stopMeasure('index');
             Rudra::get("debugbar")['time']->startMeasure('routing');
         }
