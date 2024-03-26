@@ -16,6 +16,7 @@ class ShipController extends Controller implements ShipControllerInterface
     public function shipInit(): void
     {
         if (Rudra::config()->get("environment") === "development") {
+            
             Rudra::get("debugbar")['time']->stopMeasure('routing');
             Rudra::get("debugbar")['time']->stopMeasure('application');
 
