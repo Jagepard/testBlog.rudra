@@ -9,7 +9,7 @@ use App\Containers\Blog\Entity\Materials;
 class MaterialsController extends BlogController
 {
     #[Routing(url: '', method: 'GET')]
-    #[Routing(url: 'page/{page}', method: 'GET')]
+    #[Routing(url: 'page/:page', method: 'GET')]
     public function actionIndex(string $page = '1'): void
     {
         $pagination = new Pagination($page, 5, Materials::numRows());
