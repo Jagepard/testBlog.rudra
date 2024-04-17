@@ -61,8 +61,9 @@ class Materials extends Model
         $validated = Validation::getValidated($processed, ['csrf_field']);
         $redirect  = $validated["redirect"];
         unset($validated["redirect"]);
+        $validated["id"] = $id;
 
-        $this->update($id, $validated);
+        $this->update($validated);
         Redirect::run($redirect, "full");
     }
 
@@ -80,7 +81,7 @@ class Materials extends Model
         $id        = Request::get()->get('id');
         $material  = $this->find($id);
 
-        $this->update($id, ['image' => '']);
+        $this->update(['id' => $id, 'image' => '']);
         $this->delImages($material['image']);
         Redirect::run(Request::server()->get('HTTP_REFERER'), "full");
     }
