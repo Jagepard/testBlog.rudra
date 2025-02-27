@@ -117,6 +117,8 @@ class Materials extends Model
 
     private function addImages(array $uploadedFile, string $imgName, \GdImage $GDimage): void
     {
+        $this->makeDirectories(config('admin', 'images_path'));
+
         if (move_uploaded_file($uploadedFile['tmp_name'], config('admin', 'images_path') . $imgName)) {
             $imgResized = imagescale($GDimage, config('admin', 'thumb_width'));
             imagejpeg($imgResized, config('admin', 'images_path') . 'thumb/' . $imgName);
@@ -128,6 +130,17 @@ class Materials extends Model
         if(!empty($imgName)) {
             $this->removeImg(config('admin', 'images_path') . $imgName);
             $this->removeImg(config('admin', 'images_path') . 'thumb/' . $imgName);
+        }
+    }
+
+    private function makeDirectories(string $imgPath): void
+    {
+        if (!is_dir($imgPath)) {
+            mkdir($imgPath, 0755, true);
+        }
+
+        if (!is_dir($imgPath . 'thumb/')) {
+            mkdir($imgPath . 'thumb/', 0755, true);
         }
     }
 }
