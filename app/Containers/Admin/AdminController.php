@@ -3,15 +3,17 @@
 namespace App\Containers\Admin;
 
 use App\Ship\ShipController;
-use App\Ship\Utils\Translator;
 use Rudra\Container\Facades\Rudra;
 use Rudra\View\ViewFacade as View;
+use App\Containers\Tools\Translator;
+use App\Containers\Tools\HelperTrait;
 use Rudra\Controller\ContainerControllerInterface;
 use Rudra\EventDispatcher\EventDispatcherFacade as Dispatcher;
 
 class AdminController extends ShipController implements ContainerControllerInterface
 {
     use Translator;
+    use HelperTrait;
 
     public function containerInit(): void
     {
