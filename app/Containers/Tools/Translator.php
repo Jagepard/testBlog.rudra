@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Ship\Utils;
+namespace App\Containers\Tools;
 
 trait Translator
 {

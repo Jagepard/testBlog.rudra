@@ -3,8 +3,8 @@
 namespace App\Containers\Blog;
 
 use App\Ship\ShipController;
-use App\Ship\Utils\HelperTrait;
 use Rudra\View\ViewFacade as View;
+use App\Containers\Tools\HelperTrait;
 use Rudra\Controller\ContainerControllerInterface;
 
 class BlogController extends ShipController implements ContainerControllerInterface
