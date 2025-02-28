@@ -2,7 +2,6 @@
 
 namespace App\Ship;
 
-use App\Ship\Utils\HelperTrait;
 use Rudra\Controller\Controller;
 use Rudra\Container\Facades\Rudra;
 use Rudra\Controller\ShipControllerInterface;
@@ -11,8 +10,6 @@ use Rudra\EventDispatcher\EventDispatcherFacade as Dispatcher;
 
 class ShipController extends Controller implements ShipControllerInterface
 {
-    use HelperTrait;
-
     public function shipInit(): void
     {
         if (Rudra::config()->get("environment") === "development") {
