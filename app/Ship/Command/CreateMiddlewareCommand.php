@@ -23,9 +23,13 @@ class CreateMiddlewareCommand extends FileCreator
         $container = ucfirst(str_replace(PHP_EOL, "", Cli::reader()));
 
         if (!empty($container)) {
+            if (!is_dir(Rudra::config()->get('app.path') . "/app/Containers/$container/")) {
+                Cli::printer("⚠️  Container '$container' does not exist" . PHP_EOL, "light_yellow");
+                return;
+            }
 
             $this->writeFile(
-                [str_replace('/', DIRECTORY_SEPARATOR, Rudra::config()->get('app.path') . "/app/Containers/$container/Middleware/"), "{$className}.php"],
+                [Rudra::config()->get('app.path') . "/app/Containers/$container/Middleware/", "{$className}.php"],
                 $this->createClass($className, $container)
             );
 
@@ -50,20 +54,15 @@ class CreateMiddlewareCommand extends FileCreator
 
 namespace App\Containers\\{$container}\Middleware;
 
-use Rudra\Router\MiddlewareInterface;
-use Rudra\Router\RouterFacade as Router;
-
-class {$className} implements MiddlewareInterface
+class {$className}
 {
-    public function __invoke(\$chainOfMiddlewares)
+    public function __invoke(\$next, ...\$params)
     {
         dump(__CLASS__);
-        \$this->next(\$chainOfMiddlewares);
-    }
 
-    public function next(array \$chainOfMiddlewares): void
-    {
-        Router::handleMiddleware(\$chainOfMiddlewares);
+        if (\$next) {
+            \$next();
+        }
     }
 }\r\n
 EOT;

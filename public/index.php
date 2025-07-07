@@ -24,22 +24,14 @@ Rudra::waiting(Rudra::config()->get("services"));
 
 if (Rudra::config()->get("environment") === "development") {
     Rudra::get("debugbar")->addCollector(new DebugBar\DataCollector\PDO\PDOCollector(new DebugBar\DataCollector\PDO\TraceablePDO(Rudra::get("DSN"))));
-    Rudra::get("debugbar")->addCollector(new DebugBar\DataCollector\ConfigCollector(Rudra::config()->get()));
+    Rudra::get("debugbar")->addCollector(new DebugBar\DataCollector\ConfigCollector(Rudra::config()->all()));
     Rudra::get("debugbar")["time"]->startMeasure("application");
     Rudra::get("debugbar")["time"]->startMeasure("index");
 }
 
 session_name("RSID_" . Rudra::get(Auth::class)->getSessionHash());
 
-try {
-    Rudra::get(Route::class)->run();
-} catch (ArgumentCountError $e) {
-    $trace = $e->getTrace()[0];
-    Rudra::autowire(Rudra::get($trace['class']), $trace['function']);
-} catch (TypeError $e) {
-    $trace = $e->getTrace()[0];
-    Rudra::autowire(Rudra::new($trace['class']), $trace['function'], $trace['args']);
-} 
+Rudra::get(Route::class)->run();
 
 /*
  | php rudra serve to run built-in web server

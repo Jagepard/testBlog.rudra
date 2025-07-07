@@ -23,7 +23,7 @@ class AdminController extends ShipController implements ContainerControllerInter
         Rudra::waiting()->set($config['services']);
 
         Dispatcher::dispatch('RoleAccess', 'admin');
-        View::setup(dirname(__DIR__) . '/', "Admin/UI/tmpl", "Admin/UI/cache");
+        View::setup(dirname(__DIR__) . "/Admin/UI/tmpl", "Admin_");
 
         data([
             "title" => __CLASS__,

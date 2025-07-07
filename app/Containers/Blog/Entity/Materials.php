@@ -12,6 +12,5 @@ use Rudra\Model\Entity;
  */
 class Materials extends Entity
 {
-    public static string $table = "materials";
-    public static string $directory = __DIR__;
+    public static ?string $table = "materials";
 }
