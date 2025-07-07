@@ -13,7 +13,7 @@ class BlogController extends ShipController implements ContainerControllerInterf
 
     public function containerInit(): void
     {
-        View::setup(dirname(__DIR__) . '/', "Blog/UI/tmpl", "Blog/UI/cache");
+        View::setup(dirname(__DIR__) . "/Blog/UI/tmpl", "Blog_");
 
         data([
             "title" => 'TestBlog: ',

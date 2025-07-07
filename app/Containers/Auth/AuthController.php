@@ -10,7 +10,7 @@ class AuthController extends ShipController implements ContainerControllerInterf
 {
     public function containerInit(): void
     {
-        View::setup(dirname(__DIR__) . '/', "Auth/UI/tmpl", "Auth/UI/cache");
+        View::setup(dirname(__DIR__) . "/Auth/UI/tmpl", "Auth_");
         data(["title" => __CLASS__,]);
     }
 }
