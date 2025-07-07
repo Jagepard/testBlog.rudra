@@ -23,22 +23,20 @@ class CreateModelCommand extends FileCreator
         $container = ucfirst(str_replace(PHP_EOL, "", Cli::reader()));
 
         if (!empty($container)) {
+            if (!is_dir(Rudra::config()->get('app.path') . "/app/Containers/$container/")) {
+                Cli::printer("⚠️  Container '$container' does not exist" . PHP_EOL, "light_yellow");
+                return;
+            }
 
             $this->writeFile(
-                [str_replace('/', DIRECTORY_SEPARATOR, Rudra::config()->get('app.path') . "/app/Containers/$container/Entity/"), "{$className}.php"],
+                [Rudra::config()->get('app.path') . "/app/Containers/$container/Entity/", "{$className}.php"],
                 $this->createEntity($className, $container)
             );
 
             $this->writeFile(
-                [str_replace('/', DIRECTORY_SEPARATOR, Rudra::config()->get('app.path') . "/app/Containers/$container/Model/"), "{$className}.php"],
-                $this->createModel($className, $container)
-            );
-
-            $this->writeFile(
-                [str_replace('/', DIRECTORY_SEPARATOR, Rudra::config()->get('app.path') . "/app/Containers/$container/Repository/"), "{$className}Repository.php"],
+                [Rudra::config()->get('app.path') . "/app/Containers/$container/Repository/", "{$className}Repository.php"],
                 $this->createRepository($className, $container)
             );
-
         } else {
             $this->actionIndex();
         }
@@ -70,34 +68,6 @@ use Rudra\Model\Entity;
 class {$className} extends Entity
 {
     public static string \$table = "$table";
-    public static string \$directory = __DIR__;
-}\r\n
-EOT;
-    }
-
-    /**
-     * Creates class data
-     * ------------------
-     * Создает данные класса
-     *
-     * @param string $className
-     * @param string $container
-     * @return string
-     */
-    private function createModel(string $className, string $container): string
-    {
-        $table = strtolower($className);
-
-        return <<<EOT
-<?php
-
-namespace App\Containers\\{$container}\Model;
-
-use Rudra\Model\Model;
-
-class {$className} extends Model
-{
-
 }\r\n
 EOT;
     }
@@ -120,7 +90,6 @@ EOT;
 
 namespace App\Containers\\{$container}\Repository;
 
-use Rudra\Model\QBFacade;
 use Rudra\Model\Repository;
 
 class {$className}Repository extends Repository
