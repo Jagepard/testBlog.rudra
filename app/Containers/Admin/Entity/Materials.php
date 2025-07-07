@@ -19,6 +19,5 @@ use Rudra\Model\Repository;
  */
 class Materials extends Entity
 {
-    public static string $table     = "materials";
-    public static string $directory = __DIR__;
+    public static ?string $table  = "materials";
 }
