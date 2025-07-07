@@ -1,8 +1,9 @@
 {
-    "name"             : "rudra/framework",
-    "description"      : "Rudra framework",
-    "type"             : "library",
-    "keywords"         : [
+    "name": "rudra/framework",
+    "version": "v25.6",
+    "description": "Rudra framework",
+    "type": "library",
+    "keywords": [
         "rudra",
         "framework",
         "mvc-framework",
@@ -10,56 +11,53 @@
         "mvc-architecture",
         "mvc"
     ],
-    "license"          : "MIT",
-    "authors"          : [
+    "license": "MIT",
+    "authors": [
         {
-            "name"    : "Jagepard",
-            "email"   : "jagepard@yandex.ru",
+            "name": "Jagepard",
+            "email": "jagepard@yandex.ru",
             "homepage": "https://jagepard.ru",
-            "role"    : "Developer"
+            "role": "Developer"
         }
     ],
-    "support"          : {
+    "support": {
         "email": "jagepard@yandex.ru",
         "skype": "jagepard.ru"
     },
-    "autoload"         : {
+    "autoload": {
         "psr-4": {
             "App\\": "app/"
         }
     },
-    "require"          : {
-        "php"                : ">=8.0",
-        "filp/whoops"        : "^2.9",
-        "ext-fileinfo"       : "*",
-        "ext-pdo"            : "*",
-        "symfony/var-dumper" : "*",
+    "require": {
+        "php": ">=8.3",
+        "filp/whoops": "^2.9",
+        "ext-fileinfo": "*",
+        "ext-pdo": "*",
+        "symfony/var-dumper": "*",
         "phpmailer/phpmailer": "dev-master",
-        "maximebf/debugbar"  : "dev-master",
-        "symfony/yaml"       : "5.4.*",
-        "ext-exif"           : "*",
-        "ext-gd"             : "*",
-        "ext-intl"           : "*",
-        "ext-mbstring"       : "*"
-    },
-    "require-dev"      : {
-        "rudra/event-dispatcher": "9999999-dev",
-        "rudra/validation"      : "9999999-dev",
-        "rudra/cli"             : "dev-main",
-        "rudra/pagination"      : "dev-master",
-        "rudra/oauth-client"    : "dev-master",
-        "rudra/exception"       : "dev-master",
-        "rudra/controller"      : "dev-master",
-        "rudra/router"          : "dev-master",
-        "rudra/container"       : "dev-master",
-        "rudra/redirect"        : "dev-master",
-        "rudra/annotation"      : "dev-master",
-        "rudra/view"            : "dev-master",
-        "rudra/model"           : "dev-master"
+        "symfony/yaml": "5.4.*",
+        "php-debugbar/php-debugbar": "^2.1",
+        "rudra/event-dispatcher": "self.version",
+        "rudra/validation": "self.version",
+        "rudra/cli": "self.version",
+        "rudra/pagination": "self.version",
+        "rudra/oauth-client": "self.version",
+        "rudra/exception": "self.version",
+        "rudra/controller": "self.version",
+        "rudra/router": "self.version",
+        "rudra/container": "self.version",
+        "rudra/redirect": "self.version",
+        "rudra/annotation": "self.version",
+        "rudra/view": "self.version",
+        "rudra/model": "self.version",
+        "rudra/auth": "self.version"
     },
     "minimum-stability": "dev",
-    "config"           : {
+    "prefer-stable": true,
+    "config": {
         "optimize-autoloader": true,
-        "prefer-stable"      : true
+        "sort-packages": true,
+        "platform-check": false
     }
 }
